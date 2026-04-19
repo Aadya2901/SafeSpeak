@@ -1,6 +1,6 @@
 # 🛡️ SafeSpeak — Multilingual Toxic Comment Classification
 
-## 🚀 Overview
+## 🚀 Overview 
 
 **SafeSpeak** is an intelligent NLP-based system designed to detect toxic and harmful comments across multiple languages. It leverages state-of-the-art transformer models to enable accurate, scalable moderation of user-generated content.
 
