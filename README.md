@@ -39,7 +39,7 @@ Online platforms face increasing challenges in moderating toxic content, especia
 
 ## 📊 Dataset Analysis
 
-![Label Distribution](graph.png)
+![Label Distribution](label-distribution.png)
 
 Training label distribution: `{0: 3602, 1: 3594}` — near-perfectly balanced across both classes.
 
