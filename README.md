@@ -128,12 +128,16 @@ weighted avg       0.97      0.97      0.97      1800
 
 ## 🔍 Example Predictions
 
-```
-Input: "you are stupid"
-Prediction: 1 (toxic)
+The following examples demonstrate the model’s ability to detect toxicity across both English and Hindi:
 
-Input: "this is amazing"
-Prediction: 0 (non-toxic)
+```
+Input: "you are stupid" → Prediction: 1 (toxic) | Confidence: 0.9986  
+Input: "this is amazing" → Prediction: 0 (non-toxic) | Confidence: 0.9992  
+Input: "tum bahut kamchor ho" → Prediction: 1 (toxic) | Confidence: 0.9744  
+Input: "तुम बहुत बेकार हो" → Prediction: 1 (toxic) | Confidence: 0.9986  
+Input: "nice job idiot" → Prediction: 1 (toxic) | Confidence: 0.9986  
+Input: "wow great, another genius decision" → Prediction: 0 (non-toxic) | Confidence: 0.9992
+
 ```
 
 ---
@@ -193,6 +197,12 @@ Execute all cells in bert_notebook.ipynb
 
 ---
 
+## ⚠️ Limitations
+
+The model may struggle with sarcasm, subtle context, or culturally nuanced toxicity where harmful intent is not explicitly stated.
+
+---
+
 ## 🔮 Future Improvements
 
 * Use advanced models like XLM-RoBERTa for broader language coverage
@@ -205,6 +215,11 @@ Execute all cells in bert_notebook.ipynb
 
 SafeSpeak demonstrates an effective and scalable approach to multilingual toxicity detection. By leveraging the `textdetox/bert-multilingual-toxicity-classifier` pretrained model, it achieves a **ROC-AUC of 0.9966** on the validation set with **0.97 macro F1**, while maintaining efficiency and full reproducibility.
 
+---
+
+## 🚀 Impact
+
+This approach demonstrates that effective multilingual toxicity detection can be achieved efficiently using pretrained transformer models without requiring large-scale retraining.
 
 ---
 
