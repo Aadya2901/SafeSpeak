@@ -1,16 +1,16 @@
 # 🛡️ SafeSpeak — Multilingual Toxic Comment Classification
 
-## 🚀 Overview 
+## 🚀 Overview
 
-**SafeSpeak** is an intelligent NLP-based system designed to detect toxic and harmful comments across multiple languages. It leverages state-of-the-art transformer models to enable accurate, scalable moderation of user-generated content.
+**SafeSpeak** is an NLP-based system designed to detect toxic and harmful comments across multilingual text data. It leverages a pretrained transformer model to enable accurate and scalable moderation of user-generated content.
 
-Developed during a global AI datathon, SafeSpeak addresses real-world challenges such as multilingual understanding and class imbalance in text classification.
+Developed during a global AI datathon, SafeSpeak addresses real-world challenges such as multilingual understanding and contextual toxicity detection.
 
 ---
 
 ## 🎯 Problem Statement
 
-Online platforms face increasing challenges in moderating toxic content, especially in multilingual environments. Traditional models often fail to generalize across languages and struggle with imbalanced datasets.
+Online platforms face increasing challenges in moderating toxic content, especially in multilingual environments. Traditional models often fail to generalize across languages and capture contextual meaning.
 
 **SafeSpeak aims to:**
 
@@ -22,12 +22,25 @@ Online platforms face increasing challenges in moderating toxic content, especia
 
 ## 📊 Dataset
 
-* Dataset provided at the start of the hackathon
+* Dataset provided during the hackathon
+
 * Contains:
 
   * Multilingual text comments
-  * Binary toxicity labels
-* Highly imbalanced (majority non-toxic samples)
+  * Binary labels:
+
+    * `0 → Non-toxic`
+    * `1 → Toxic`
+
+* The dataset is relatively balanced, which helps in unbiased model training.
+
+---
+
+## 📊 Dataset Analysis
+
+![Label Distribution](graph.png)
+
+The dataset shows a near-balanced distribution of toxic and non-toxic samples.
 
 ---
 
@@ -37,38 +50,37 @@ Online platforms face increasing challenges in moderating toxic content, especia
 
 * Lowercasing text
 * Removing URLs and special characters
-* Basic text normalization
+* Basic normalization while preserving Hindi and English text
 
 ---
 
 ### 🧠 Model Architecture
 
-We use **transfer learning** with a pretrained transformer model:
+We use a pretrained transformer model:
 
-👉 **Multilingual BERT / DistilBERT**
+👉 **textdetox/bert-multilingual-toxicity-classifier (Hugging Face)**
 
-**Why this approach?**
+**Why this model?**
 
-* Supports multiple languages
-* Captures contextual meaning
-* Eliminates need for training from scratch
+* Supports multilingual text (Hindi + English)
+* Captures contextual semantics
+* Leverages transfer learning for better performance
 
 ---
 
 ### 🔤 Tokenization
 
-* Utilized pretrained tokenizer from HuggingFace
-* Converts raw text into model-readable format
+* Used Hugging Face tokenizer
+* Converts text into tokenized format for BERT
 
 ---
 
 ### 🏋️ Model Training
 
-* Fine-tuned the pretrained model on the dataset
+* Fine-tuned pretrained model on dataset
 * Optimized using:
 
-  * Learning rate tuning
-  * Epoch selection
+  * Epoch tuning
   * Batch size adjustment
 
 ---
@@ -76,24 +88,27 @@ We use **transfer learning** with a pretrained transformer model:
 ### 📏 Evaluation Metric
 
 * Primary Metric: **ROC-AUC**
-* Suitable for imbalanced datasets
-* Measures classification performance effectively
-
----
-
-## 🧪 Experiments & Improvements
-
-* Built a baseline model for initial benchmarking
-* Transitioned to transformer-based approach
-* Iteratively improved performance via tuning
+* Evaluates how well the model distinguishes toxic vs non-toxic comments
 
 ---
 
 ## 📈 Results
 
-* Achieved strong ROC-AUC score on validation data
-* Demonstrated effective multilingual classification
-* Robust performance on imbalanced data
+* **Train ROC-AUC Score: 0.85**
+* Strong multilingual classification performance
+* Effective handling of contextual toxicity
+
+---
+
+## 🔍 Example Predictions
+
+```
+Input: "you are stupid"
+Prediction: 1 (toxic)
+
+Input: "this is amazing"
+Prediction: 0 (non-toxic)
+```
 
 ---
 
@@ -103,38 +118,65 @@ We use **transfer learning** with a pretrained transformer model:
 * Google Colab
 * Hugging Face Transformers
 * Scikit-learn
-* Pandas, NumPy
+* Pandas, NumPy, Matplotlib
+
+---
+
+## ▶️ How to Run
+
+1. Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+2. Run the notebook:
+
+```
+Execute all cells in bert_notebook.ipynb
+```
+
+3. Output:
+
+* Generates `no_label.csv` with predicted labels
+
+---
+
+## ⚙️ Reproducibility
+
+The solution is **device-agnostic** and runs on both CPU and GPU environments.
 
 ---
 
 ## 💡 Key Features
 
 * 🌍 Multilingual support
-* ⚡ Efficient transformer-based architecture
-* 📊 Robust evaluation using ROC-AUC
-* 🧠 Transfer learning for faster development
+* ⚡ Transformer-based architecture
+* 📊 ROC-AUC based evaluation
+* 🧠 Transfer learning approach
 
 ---
 
 ## 🔮 Future Improvements
 
 * Use advanced models like XLM-RoBERTa
-* Apply data balancing techniques (SMOTE, class weights)
+* Apply class balancing techniques
 * Deploy as a real-time moderation API
 
 ---
 
 ## 🤝 Conclusion
 
-SafeSpeak demonstrates a scalable and effective approach to detecting toxic content in multilingual environments. By leveraging pretrained transformer models, it achieves strong performance while maintaining efficiency.
+SafeSpeak demonstrates an effective and scalable approach to multilingual toxicity detection. By leveraging pretrained transformer models, it achieves strong performance while maintaining efficiency.
 
 ---
 
 ## 📎 Submission
 
-* Clean and reproducible code
-* Modular pipeline
-* Well-documented implementation
+* Public GitHub repository
+* Complete runnable code
+* `no_label.csv` with predictions
+* Reproducible pipeline
 
 ---
 
