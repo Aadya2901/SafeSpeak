@@ -1,5 +1,8 @@
 # 🛡️ SafeSpeak — Multilingual Toxic Comment Classification
 
+![SafeSpeak Overview](thumbnail.png)
+> Detecting toxicity across Hindi, English, and code-mixed text with high accuracy.
+
 ## 🚀 Overview
 
 **SafeSpeak** is an NLP-based system designed to detect toxic and harmful comments across multilingual text data. It leverages a pretrained transformer model to enable accurate and scalable moderation of user-generated content.
@@ -10,13 +13,13 @@ Developed during a global AI datathon, SafeSpeak addresses real-world challenges
 
 ## 🎯 Problem Statement
 
-Online platforms face increasing challenges in moderating toxic content, especially in multilingual environments. Traditional models often fail to generalize across languages and capture contextual meaning.
+![Problem vs SafeSpeak](problem.png)
 
-**SafeSpeak aims to:**
+Online platforms struggle to moderate toxic content in multilingual environments, especially where users mix Hindi and English within the same sentence.
 
-* Detect toxic comments across multiple languages
-* Provide robust classification using modern NLP techniques
-* Optimize performance using **ROC-AUC metric**
+For example: "bhai you are stupid"
+
+Traditional models often fail on such inputs due to lack of multilingual contextual understanding.
 
 ---
 
@@ -45,6 +48,13 @@ Training label distribution: `{0: 3602, 1: 3594}` — near-perfectly balanced ac
 
 ---
 
+## ⚙️ Pipeline
+
+![SafeSpeak Pipeline](pipeline.png)
+
+Text → Tokenizer → Multilingual BERT → Softmax → Toxic (1) / Non-toxic (0)
+
+---
 ## ⚙️ Approach
 
 ### 🧹 Data Preprocessing
