@@ -1,7 +1,8 @@
 # 🛡️ SafeSpeak — Multilingual Toxic Comment Classification
 
 ![SafeSpeak Overview](thumbnail.png)
-> Detecting toxicity across Hindi, English, and code-mixed text with high accuracy.
+
+> **Detecting toxicity across Hindi, English, and code-mixed text with high accuracy.**
 
 ## 🚀 Overview
 
