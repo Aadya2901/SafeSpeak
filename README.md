@@ -67,6 +67,10 @@ We use a pretrained transformer model:
 * Captures contextual semantics
 * Leverages transfer learning for better performance on toxicity detection
 
+This model was selected after evaluating that it was explicitly trained on multilingual toxicity corpora spanning multiple languages including Hindi and English — making it well aligned with the dataset's composition.
+
+A general-purpose multilingual model (such as base mBERT) would require significantly more data and training time to achieve comparable performance on toxicity-specific language patterns.
+
 ---
 
 ### 🔤 Tokenization
