@@ -26,13 +26,14 @@ Online platforms face increasing challenges in moderating toxic content, especia
 
 * Contains:
 
-  * Multilingual text comments
+  * Multilingual text comments (Hindi + English)
   * Binary labels:
 
     * `0 → Non-toxic`
     * `1 → Toxic`
 
-* The dataset is relatively balanced, which helps in unbiased model training.
+* Training set: **8,996 samples** (7,196 train / 1,800 validation after split)
+* The dataset is near-balanced, which helps prevent model bias
 
 ---
 
@@ -40,7 +41,7 @@ Online platforms face increasing challenges in moderating toxic content, especia
 
 ![Label Distribution](graph.png)
 
-The dataset shows a near-balanced distribution of toxic and non-toxic samples.
+Training label distribution: `{0: 3602, 1: 3594}` — near-perfectly balanced across both classes.
 
 ---
 
@@ -48,9 +49,9 @@ The dataset shows a near-balanced distribution of toxic and non-toxic samples.
 
 ### 🧹 Data Preprocessing
 
-* Lowercasing text
-* Removing URLs and special characters
-* Basic normalization while preserving Hindi and English text
+* Removing missing values and empty strings
+* Removing duplicate entries
+* Basic cleaning while preserving Hindi (Devanagari) and English text
 
 ---
 
@@ -64,39 +65,60 @@ We use a pretrained transformer model:
 
 * Supports multilingual text (Hindi + English)
 * Captures contextual semantics
-* Leverages transfer learning for better performance
+* Leverages transfer learning for better performance on toxicity detection
 
 ---
 
 ### 🔤 Tokenization
 
-* Used Hugging Face tokenizer
-* Converts text into tokenized format for BERT
+* Used Hugging Face `AutoTokenizer`
+* `max_length=128`, padding and truncation enabled
+* Converts text into token IDs compatible with BERT
 
 ---
 
 ### 🏋️ Model Training
 
-* Fine-tuned pretrained model on dataset
-* Optimized using:
-
-  * Epoch tuning
-  * Batch size adjustment
+* Stratified 80/20 train/validation split
+* Fine-tuned pretrained model on the labeled dataset
+* Training configuration:
+  * Epochs: 3
+  * Batch size: 8 (train), 16 (eval)
+  * Weight decay: 0.01
+  * Warmup steps: 270 (~10% of total steps)
 
 ---
 
 ### 📏 Evaluation Metric
 
 * Primary Metric: **ROC-AUC**
-* Evaluates how well the model distinguishes toxic vs non-toxic comments
+* Also evaluated with full classification report (precision, recall, F1)
 
 ---
 
 ## 📈 Results
 
-* **Train ROC-AUC Score: 0.85**
-* Strong multilingual classification performance
-* Effective handling of contextual toxicity
+| Metric | Score |
+|---|---|
+| Zero-shot ROC-AUC (before fine-tuning) | **0.9989** |
+| Fine-tuned ROC-AUC (after training) | **0.9966** |
+| Accuracy | **0.97** |
+| Macro F1 | **0.97** |
+
+**Classification Report (Validation Set — 1,800 samples):**
+
+```
+              precision    recall  f1-score   support
+
+   Non-toxic       0.98      0.97      0.97       901
+       Toxic       0.97      0.98      0.97       899
+
+    accuracy                           0.97      1800
+   macro avg       0.97      0.97      0.97      1800
+weighted avg       0.97      0.97      0.97      1800
+```
+
+> Note: The pretrained model already achieves an exceptional zero-shot ROC-AUC of 0.9989, demonstrating strong out-of-the-box multilingual toxicity detection. Fine-tuning maintained this high performance with 0.9966 ROC-AUC.
 
 ---
 
@@ -115,7 +137,7 @@ Prediction: 0 (non-toxic)
 ## 🛠️ Tech Stack
 
 * Python
-* Google Colab
+* Google Colab (T4 GPU)
 * Hugging Face Transformers
 * Scikit-learn
 * Pandas, NumPy, Matplotlib
@@ -124,60 +146,60 @@ Prediction: 0 (non-toxic)
 
 ## ▶️ How to Run
 
-1. Install dependencies:
+1. Upload the following files to Colab:
+   * `toxic_labeled.xlsx` — training data
+   * `toxic_no_label_evaluation.xlsx` — evaluation data
+
+2. Install dependencies (run Cell 1 first, then restart runtime):
 
 ```
-pip install -r requirements.txt
+!pip install -U transformers
 ```
 
-2. Run the notebook:
+3. Run the notebook:
 
 ```
 Execute all cells in bert_notebook.ipynb
 ```
 
-3. Output:
+4. Output:
 
 * Generates `no_label.csv` with predicted labels
+* Saves `graph.png` label distribution plot
 
 ---
 
 ## ⚙️ Reproducibility
 
-The solution is **device-agnostic** and runs on both CPU and GPU environments.
+* Random seed fixed to `42` across `random`, `numpy`, `torch`, and Hugging Face `set_seed`
+* Device-agnostic — runs on both CPU and GPU environments
+* All outputs saved in notebook cells for verification
 
 ---
 
 ## 💡 Key Features
 
-* 🌍 Multilingual support
+* 🌍 Multilingual support (Hindi + English)
 * ⚡ Transformer-based architecture
-* 📊 ROC-AUC based evaluation
-* 🧠 Transfer learning approach
+* 📊 ROC-AUC based evaluation with full classification report
+* 🧠 Transfer learning from domain-specific toxicity classifier
+* 🔍 Zero-shot baseline comparison included
 
 ---
 
 ## 🔮 Future Improvements
 
-* Use advanced models like XLM-RoBERTa
-* Apply class balancing techniques
+* Use advanced models like XLM-RoBERTa for broader language coverage
+* Apply text augmentation to further improve generalization
 * Deploy as a real-time moderation API
 
 ---
 
 ## 🤝 Conclusion
 
-SafeSpeak demonstrates an effective and scalable approach to multilingual toxicity detection. By leveraging pretrained transformer models, it achieves strong performance while maintaining efficiency.
+SafeSpeak demonstrates an effective and scalable approach to multilingual toxicity detection. By leveraging the `textdetox/bert-multilingual-toxicity-classifier` pretrained model, it achieves a **ROC-AUC of 0.9966** on the validation set with **0.97 macro F1**, while maintaining efficiency and full reproducibility.
+
 
 ---
 
-## 📎 Submission
-
-* Public GitHub repository
-* Complete runnable code
-* `no_label.csv` with predictions
-* Reproducible pipeline
-
----
-
-💡 *“Simple, well-executed solutions outperform complex, incomplete ones.”*
+💡 *"Simple, well-executed solutions outperform complex, incomplete ones."*
