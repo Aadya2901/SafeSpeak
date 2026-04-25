@@ -153,7 +153,7 @@ Prediction: 0 (non-toxic)
 2. Install dependencies (run Cell 1 first, then restart runtime):
 
 ```
-!pip install -U transformers
+pip install transformers==4.41.2 accelerate==0.30.1 huggingface-hub==0.34.0 tokenizers==0.19.1
 ```
 
 3. Run the notebook:
